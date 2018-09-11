@@ -12,8 +12,7 @@
  * Reads line from stdin
 **/
 
-char * cash_read_line(void)
-{
+char * cash_read_line(void) {
     static char *line = NULL;
     ssize_t buffsize = 0; // getline will allocate
     getline(&line, &buffsize, stdin);
@@ -25,8 +24,7 @@ char * cash_read_line(void)
  * of said tokens
 **/
 
-char ** cash_split_line(char *line)
-{
+char ** cash_split_line(char *line) {
     int buffsize = CASH_TOK_BUFFSIZE;
     int position = 0;
     char **tokens = malloc(buffsize * sizeof(char*));
@@ -61,8 +59,7 @@ char ** cash_split_line(char *line)
  * then launch child process to execute
 **/
 
-int cash_launch(char **args)
-{
+int cash_launch(char **args) {
     pid_t pid, wpid;
     int status;
 
@@ -104,8 +101,7 @@ int (*builtin_func[]) (char **) = {
     &cash_exit
 };
 
-int cash_num_builtins()
-{
+int cash_num_builtins() {
     return sizeof(builtin_str) / sizeof(char *);
 }
 
@@ -113,8 +109,7 @@ int cash_num_builtins()
  * Builtin command implementations
 **/
 
-int cash_cd (char **args)
-{
+int cash_cd (char **args) {
     if (args[1] == NULL) {
         fprintf(stderr, "ca$h: expected argument to \"cd\"\n");
     } else {
@@ -125,8 +120,7 @@ int cash_cd (char **args)
     return 1;
 }
 
-int cash_help (char **args)
-{
+int cash_help (char **args) {
     int i;
     printf("Jese Camilo's CA$H Shell\n");
     printf("Type commands and hit ENTER.");
@@ -140,8 +134,7 @@ int cash_help (char **args)
     return 1;
 }
 
-int cash_exit (char **args)
-{
+int cash_exit (char **args) {
     return 0;
 }
 
@@ -150,8 +143,7 @@ int cash_exit (char **args)
  * launch process
 **/
 
-int cash_execute (char **args)
-{
+int cash_execute (char **args) {
     int i;
 
     if (args[0] == NULL) {
@@ -170,8 +162,7 @@ int cash_execute (char **args)
  * Shell loop utilizing above functions
 **/
 
-void cash_loop(void)
-{
+void cash_loop(void) {
     char *line;
     char **args;
     int status;
@@ -191,8 +182,7 @@ void cash_loop(void)
  * Program entry
 **/
 
-int main(int argc, char **argv)
-{
+int main(int argc, char **argv) {
     cash_loop(); // run shell loop
 
     return EXIT_SUCCESS;
